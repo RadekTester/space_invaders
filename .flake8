@@ -1,0 +1,8 @@
+[flake8]
+ignore = W291, W293, W503
+exclude =
+    .git,
+    venv,
+    .vscode,
+    __pycache__,
+max-line-length = 160

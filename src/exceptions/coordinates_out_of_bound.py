@@ -1,0 +1,2 @@
+class CoordinatesOutOfBandException(Exception):
+    pass

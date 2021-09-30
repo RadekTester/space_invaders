@@ -31,4 +31,22 @@ Then ensure that you have installed all necessary packages with:
 
 
 ### Details of the application
+- Goal of the application is to identify intruders on radar scan
+- Radar scan is distorted with noise
+- It is considered, that not always a 'perfect' intruder picture will be visible. Therefore Probability function has been developed to calculate probability of seeing a intruder
 
+
+### Coordinates
+Coordinates are provides with x and y. 
+x is horizontal from left to right
+y is vertical from top to bottom
+
+x=0, y=0
++----------
+|  x-> 
+|  y 
+|  |
+|  
+
+### Assumptions
+- Intruder and Radar scans will be perfect rectangulars. If not, application will raise exception about that.
