@@ -1,3 +1,6 @@
+import config
+
+
 class IntruderDetection():
     
     total_intruder_pixels = 0
@@ -9,7 +12,7 @@ class IntruderDetection():
     intruder = None
 
     NOT_ENOUGH_PIXELS_VISIBLE_FACTOR = 0.5
-    MIN_MATCHING_PIXELS_FACTOR = 0.85 
+    MIN_MATCHING_PIXELS_FACTOR = config.MIN_MATCHING_PIXELS_PERCENTAGE
 
     def is_intruder_found(self):
 
