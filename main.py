@@ -1,4 +1,5 @@
 import os
+import config
 from src.models.intruder import Intruder
 from src.models.radar_scan import RadarScan
 from src.services.scan_data_reader import ScanDataReader
@@ -10,10 +11,10 @@ def main():
     scan_data_reader = ScanDataReader(text_file_reader)
     
     intruder_files_paths = []
-    intruder_files_paths.append(os.path.join('scan_data', 'intruder', '1.txt'))
-    intruder_files_paths.append(os.path.join('scan_data', 'intruder', '2.txt'))
+    intruder_files_paths.append(os.path.join(config.SCAN_FILE_PATH_INTRUDERS, '1.txt'))
+    intruder_files_paths.append(os.path.join(config.SCAN_FILE_PATH_INTRUDERS, '2.txt'))
 
-    scan_file_path = os.path.join('scan_data', 'radar', '1.txt')
+    scan_file_path = os.path.join(config.SCAN_FILE_PATH_RADARS, '1.txt')
 
     radar_scan = RadarScan(scan_data_reader)
     radar_scan.read_scan_data(scan_file_path)
