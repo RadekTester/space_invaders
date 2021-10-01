@@ -61,7 +61,7 @@ x=0, y=0 is the top left corner
 - If 85% (parameter in config.py) of the "pixels" match intruder, we are considering this a match and positively identified intruder.
 - Intruders might be entering the radar range. Therefore at the edges we might have intrudres, but not yet fully visible.
 - Logic is implemented in a way that it starts detecting intruders before they are visible as a whole. E.g., half of the intruder might be visible at the edge.
-- If intruder is not visible on the screen matching pixels percentage is increased proportianlly (more than 85% match is required). This is to eliminate false positives.
+- If intruder is not visible on the screen, matching pixels percentage is increased proportianlly (more than 85% match is required). This is to eliminate false positives.
 
 
 ### Results for sample data provided
