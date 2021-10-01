@@ -113,8 +113,7 @@ class RadarScan(Scan):
         return visible_pixles
 
     def _get_scanning_boundaries(self, intruders: List[Intruder]) -> Tuple[int, int, int, int]:
-        widest_intruder = self._get_widest_intruder(intruders)
-        tallest_intruder = self._get_tallest_intruder(intruders)
+        widest_intruder, tallest_intruder = self._get_widest_and_tallest_intruder(intruders)
         max_intruder_width = widest_intruder.get_width()
         max_intruder_height = tallest_intruder.get_height()
         
@@ -124,34 +123,26 @@ class RadarScan(Scan):
         mid_intruder_height = math.ceil(max_intruder_height / 2)
         return -1 * mid_intruder_width, -1 * mid_intruder_height, scan_width + mid_intruder_width, scan_height + mid_intruder_height
 
-    def _get_widest_intruder(self, intruders: List[Intruder]) -> Intruder:
-        widest = None
-        current_max_width = 0
+    def _get_widest_and_tallest_intruder(self, intruders: List[Intruder]) -> Tuple[Intruder, Intruder]:
+        widest, tallest = None, None
+        current_max_width, current_max_height = 0, 0
         for intruder in intruders: 
             if widest is None: 
                 widest = intruder
                 current_max_width = widest.get_width()
-                continue
+
+            if tallest is None: 
+                tallest = intruder
+                current_max_height = tallest.get_height()
 
             curr_width = intruder.get_width()
             if current_max_width < curr_width: 
                 widest = intruder
                 current_max_width = widest.get_width()
-    
-        return widest
-
-    def _get_tallest_intruder(self, intruders: List[Intruder]) -> Intruder:
-        tallest = None
-        current_max_height = 0
-        for intruder in intruders: 
-            if tallest is None: 
-                tallest = intruder
-                current_max_height = tallest.get_height()
-                continue
 
             curr_height = intruder.get_height()
             if current_max_height < curr_height: 
                 tallest = intruder
                 current_max_height = tallest.get_height()
-    
-        return tallest
+            
+        return widest, tallest
