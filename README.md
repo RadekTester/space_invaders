@@ -20,20 +20,24 @@ It is not using any fancy features so it should work with lower version of Pytho
 
 ### Installation of virutal environment
 In order for the appliaction to work, please ensure that you have created your Python virtual environment
+
 `python -m venv venv`
 
 Activate your virtual environment (on Windows machine): 
+
 `.\venv\Scripts\activate`
 
 Then ensure that you upgrade your pip. 
+
 `python -m pip install --upgrade pip`
 
 Then ensure that you have installed all necessary packages with: 
+
 `pip install -r requirements.txt`
 
 
 ### Details of the application
-- Goal of the application is to identify intruders on radar scan.
+- Goal of the application is to identify intruders on a radar scan.
 - Radar scan is distorted with noise.
 - It is considered, that not always a 'perfect' intruder picture will be visible. Therefore min matching "pixels" are required to indicate intruder.
 - Appliaction returns intruders locations (top left correner x, y location), as well as % of matching pixels and visibility on scan %.
