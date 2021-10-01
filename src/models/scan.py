@@ -33,3 +33,9 @@ class Scan():
 
     def get_size(self) -> Tuple[int, int]:
         return (len(self.scan_rows[0]), len(self.scan_rows))
+
+    def get_width(self) -> int: 
+        return len(self.scan_rows[0])
+
+    def get_height(self) -> int:
+        return len(self.scan_rows)

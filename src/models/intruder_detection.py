@@ -4,6 +4,9 @@ class IntruderDetection():
     intruder_pixels_visible_on_scan = 0
     matching_pixels_count = 0
     adjusted_min_matching_pixcels_factor = 0
+    loc_x = None
+    loc_y = None
+    intruder = None
 
     NOT_ENOUGH_PIXELS_VISIBLE_FACTOR = 0.5
     MIN_MATCHING_PIXELS_FACTOR = 0.85 
@@ -55,3 +58,14 @@ class IntruderDetection():
         max_gap = 1 - self.MIN_MATCHING_PIXELS_FACTOR
 
         return 2 * max_gap * visible_intruder_factor
+
+    def __str__(self) -> str: 
+        visibility_percentage = self.intruder_pixels_visible_on_scan / self.total_intruder_pixels
+        matching_pixels_percentage = self.matching_pixels_count / self.intruder_pixels_visible_on_scan 
+        
+        output_str = f"location: {self.loc_x}, {self.loc_y} "
+        output_str += f"| intruders visibility: {round(visibility_percentage * 100)} %"
+        output_str += f"| matching pixels: {self.matching_pixels_count}"
+        output_str += f"| matching pixels %: {round(matching_pixels_percentage * 100)}%"
+
+        return output_str

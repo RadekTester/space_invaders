@@ -8,7 +8,10 @@ from tests.mockers.mock_scan_data_reader import MockScanDataReader
 
 mock_scan_data_reader = MockScanDataReader()
 
-intruder_mock_file_path = os.path.join(config.SCAN_FILE_PATH_INTRUDERS, '2.txt')
+intruder_mock_file_path_1 = os.path.join(config.SCAN_FILE_PATH_INTRUDERS, '1.txt')
+intruder_mock_file_path_2 = os.path.join(config.SCAN_FILE_PATH_INTRUDERS, '2.txt')
+intruder_mock_file_path_3 = os.path.join(config.SCAN_FILE_PATH_INTRUDERS, '3.txt')
+intruder_mock_file_path_4 = os.path.join(config.SCAN_FILE_PATH_INTRUDERS, '4.txt')
 radar_mock_file_path = os.path.join(config.SCAN_FILE_PATH_RADARS, '2.txt')
 
 
@@ -19,7 +22,35 @@ radar_scan.read_scan_data(radar_mock_file_path)
 @pytest.fixture
 def intruder():
     intruder = Intruder(mock_scan_data_reader)
-    intruder.read_scan_data(intruder_mock_file_path)
+    intruder.read_scan_data(intruder_mock_file_path_2)
+    return intruder
+
+
+@pytest.fixture
+def intruder1():
+    intruder = Intruder(mock_scan_data_reader)
+    intruder.read_scan_data(intruder_mock_file_path_1)
+    return intruder
+
+
+@pytest.fixture
+def intruder2():
+    intruder = Intruder(mock_scan_data_reader)
+    intruder.read_scan_data(intruder_mock_file_path_2)
+    return intruder
+
+
+@pytest.fixture
+def intruder3():
+    intruder = Intruder(mock_scan_data_reader)
+    intruder.read_scan_data(intruder_mock_file_path_3)
+    return intruder
+
+
+@pytest.fixture
+def intruder4():
+    intruder = Intruder(mock_scan_data_reader)
+    intruder.read_scan_data(intruder_mock_file_path_4)
     return intruder
 
 
@@ -30,72 +61,67 @@ def intruder():
     [0, -2, 10], 
     [-6, -6, 0], 
     [-10, -10, 0], 
-
+    [2, 4, 15],
+    [2, 5, 10],
+    [9, 3, 20],
+    [10, 3, 16],
+    [10, 4, 12],
+    [100, 100, 0],
 ])
-def test__get_potential_intruders_pixels_visible_on_radar_at_location(intruder, coordinates):
+def test__get_potential_intruders_pixels_count_visible_on_radar_at_location(intruder, coordinates):
     visible_pixles = radar_scan._get_potential_intruders_pixels_visible_on_radar_at_location(
         coordinates[0], coordinates[1], intruder
     )
     assert visible_pixles == coordinates[2]
 
 
-# def test_get_intruder_detection_found(radar_scan, intruder):
-#     detection = radar_scan._get_intruder_detection_at_location(
-#         0, 0, intruder
-#     )
-#     assert detection.is_intruder_found() is True
-
-#     detection = radar_scan._get_intruder_detection_at_location(
-#         6, 2, intruder
-#     )
-#     assert detection.is_intruder_found() is True
-
-
-# def test_get_intruder_detection_not_found(radar_scan: RadarScan, intruder: Intruder):
-#     detection = radar_scan._get_intruder_detection_at_location(
-#         2, 2, intruder
-#     )
-#     assert detection.is_intruder_found() is False
+@pytest.mark.parametrize("data", [
+    [0, 0, True],
+    [7, 2, True],
+    [1, 0, False],
+    [2, 4, True],
+])
+def test_get_intruder_detection_found(intruder, data):
+    detection = radar_scan._get_intruder_detection_at_location(
+        data[0], data[1], intruder
+    )
+    assert detection.is_intruder_found() is data[2]
 
 
+@pytest.mark.parametrize("data", [
+    [0, 0, 2],
+    [7, 2, 2],
+    [1, 0, 0],
+    [2, 4, 2],
+])
+def test__get_intruders_at_location(data):
+    intruderA = Intruder(mock_scan_data_reader)
+    intruderA.read_scan_data(intruder_mock_file_path_2)
+    intruderB = Intruder(mock_scan_data_reader)
+    intruderB.read_scan_data(intruder_mock_file_path_2)
+    intruders = [intruderA, intruderB]
 
-# @pytest.mark.parametrize("coordinates", [
-#     [-1, -1, False],
-#     [0, -1, False],
-#     [-1, 0, False],
-#     [0, 0, True],
-#     [13, 0, True],
-#     [14, 0, False],
-#     [0, 5, True],
-#     [0, 6, False],
-#     [14, 7, False],
-# ])
-# def test_check_if_coordinates_are_valid(coordinates):
-#     scan.read_radar_data(radar_mock_file_path)
-#     assert scan.check_if_coordinates_are_valid(coordinates[0], coordinates[1]) == coordinates[2]
-
-
-# @pytest.mark.parametrize("coordinates", [
-#     [0, 0, "-"],
-#     [5, 0, "o"],
-#     [12, 5, "o"],
-#     [13, 5, "-"],
-# ])
-# def test_get_pixel_at_coordinates(coordinates):
-#     scan.read_radar_data(radar_mock_file_path)
-
-#     assert scan.get_pixel_at_coordinates(coordinates[0], coordinates[1]) == coordinates[2]
+    intruder_detections = radar_scan._get_intruders_at_location(data[0], data[1], intruders)
+    assert len(intruder_detections) == data[2]
 
 
-# def test_get_pixel_at_coordinates_check_exception():
-#     scan.read_radar_data(radar_mock_file_path)
-#     with pytest.raises(CoordinatesOutOfBandException):
-#         scan.get_pixel_at_coordinates(100, 100)
+def test__get_scanning_boundaries(intruder2, intruder3):
+    intruders = [intruder2, intruder3]  # 5x4 and 8x6      14x7
+
+    start_x, end_x, start_y, end_y = radar_scan._get_scanning_boundaries(intruders)
+    assert (start_x, end_x, start_y, end_y) == (-4, -3, 14 + 4, 7 + 3)
+
+    intruders = [intruder2, intruder2]  # 5x4 and 5x4    14x7
+    start_x, end_x, start_y, end_y = radar_scan._get_scanning_boundaries(intruders)
+    assert (start_x, end_x, start_y, end_y) == (-3, -2, 14 + 3, 7 + 2)
 
 
-# def test_get_size():
-#     scan.read_radar_data(radar_mock_file_path)
-#     assert scan.get_size() == (14, 6)
+def test_get_intruders(intruder1, intruder2, intruder3, intruder4):
+    intruders = [intruder2, intruder3]
 
-#     scan.read_radar_data(intruder_mock_file_path)
-#     assert scan.get_size() == (5, 4)
+    intruders_detections = radar_scan.scan_for_intruders(intruders)
+    assert len(intruders_detections) == 3
+
+    intruders = [intruder2, intruder4]
+    intruders_detections = radar_scan.scan_for_intruders(intruders)
+    assert len(intruders_detections) == 4
