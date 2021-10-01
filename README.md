@@ -66,8 +66,14 @@ x=0, y=0 is the top left corner
 
 ### Results for sample data provided
 location: 16, 28 | intruders visibility: 100 %| matching pixels: 55| matching pixels %: 86%
+
 location: 42, 0 | intruders visibility: 100 %| matching pixels: 56| matching pixels %: 88%
+
 location: 60, 13 | intruders visibility: 100 %| matching pixels: 80| matching pixels %: 91%
+
 location: 74, 1 | intruders visibility: 100 %| matching pixels: 77| matching pixels %: 88%
+
 location: 82, 41 | intruders visibility: 100 %| matching pixels: 55| matching pixels %: 86%
+
 location: 85, 12 | intruders visibility: 100 %| matching pixels: 76| matching pixels %: 86%
+
