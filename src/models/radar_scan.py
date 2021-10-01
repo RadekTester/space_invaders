@@ -124,7 +124,7 @@ class RadarScan(Scan):
         mid_intruder_height = math.ceil(max_intruder_height / 2)
         return -1 * mid_intruder_width, -1 * mid_intruder_height, scan_width + mid_intruder_width, scan_height + mid_intruder_height
 
-    def _get_widest_intruder(self, intruders: List[Intruder]):
+    def _get_widest_intruder(self, intruders: List[Intruder]) -> Intruder:
         widest = None
         current_max_width = 0
         for intruder in intruders: 
@@ -140,7 +140,7 @@ class RadarScan(Scan):
     
         return widest
 
-    def _get_tallest_intruder(self, intruders: List[Intruder]):
+    def _get_tallest_intruder(self, intruders: List[Intruder]) -> Intruder:
         tallest = None
         current_max_height = 0
         for intruder in intruders: 

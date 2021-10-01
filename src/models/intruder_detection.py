@@ -14,7 +14,7 @@ class IntruderDetection():
     NOT_ENOUGH_PIXELS_VISIBLE_FACTOR = 0.5
     MIN_MATCHING_PIXELS_FACTOR = config.MIN_MATCHING_PIXELS_PERCENTAGE
 
-    def is_intruder_found(self):
+    def is_intruder_found(self) -> bool:
 
         if not self._intruder_has_enought_data_visible_in_scan():
             return False
@@ -24,7 +24,7 @@ class IntruderDetection():
         
         return False
 
-    def _intruder_has_enought_data_visible_in_scan(self):
+    def _intruder_has_enought_data_visible_in_scan(self) -> bool:
         if self.total_intruder_pixels == 0: 
             return False
         else: 
@@ -34,7 +34,7 @@ class IntruderDetection():
 
         return False
 
-    def _enough_match_pixels_found(self):
+    def _enough_match_pixels_found(self) -> bool:
         if self.intruder_pixels_visible_on_scan == 0: 
             return False
 
