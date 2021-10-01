@@ -20,20 +20,24 @@ It is not using any fancy features so it should work with lower version of Pytho
 
 ### Installation of virutal environment
 In order for the appliaction to work, please ensure that you have created your Python virtual environment
+
 `python -m venv venv`
 
 Activate your virtual environment (on Windows machine): 
+
 `.\venv\Scripts\activate`
 
 Then ensure that you upgrade your pip. 
+
 `python -m pip install --upgrade pip`
 
 Then ensure that you have installed all necessary packages with: 
+
 `pip install -r requirements.txt`
 
 
 ### Details of the application
-- Goal of the application is to identify intruders on radar scan.
+- Goal of the application is to identify intruders on a radar scan.
 - Radar scan is distorted with noise.
 - It is considered, that not always a 'perfect' intruder picture will be visible. Therefore min matching "pixels" are required to indicate intruder.
 - Appliaction returns intruders locations (top left correner x, y location), as well as % of matching pixels and visibility on scan %.
@@ -56,5 +60,14 @@ x=0, y=0 is the top left corner
 - Intrudes do not rotate. There is no rotation of the intruder logic implemented. It could be added in the future.
 - If 85% (parameter in config.py) of the "pixels" match intruder, we are considering this a match and positively identified intruder.
 - Intruders might be entering the radar range. Therefore at the edges we might have intrudres, but not yet fully visible.
---- Logic is implemented in a way that it starts detecting intruders before they are visible as a whole. E.g., half of the intruder might be visible at the edge.
---- In intruder is not visible on the screen matching pixels percentage is increased proportianlly (more than 85% match is required). This is to eliminate false positives.
+- Logic is implemented in a way that it starts detecting intruders before they are visible as a whole. E.g., half of the intruder might be visible at the edge.
+- If intruder is not visible on the screen, matching pixels percentage is increased proportianlly (more than 85% match is required). This is to eliminate false positives.
+
+
+### Results for sample data provided
+- location: 16, 28 | intruders visibility: 100 %| matching pixels: 55| matching pixels %: 86%
+- location: 42, 0 | intruders visibility: 100 %| matching pixels: 56| matching pixels %: 88%
+- location: 60, 13 | intruders visibility: 100 %| matching pixels: 80| matching pixels %: 91%
+- location: 74, 1 | intruders visibility: 100 %| matching pixels: 77| matching pixels %: 88%
+- location: 82, 41 | intruders visibility: 100 %| matching pixels: 55| matching pixels %: 86%
+- location: 85, 12 | intruders visibility: 100 %| matching pixels: 76| matching pixels %: 86%
